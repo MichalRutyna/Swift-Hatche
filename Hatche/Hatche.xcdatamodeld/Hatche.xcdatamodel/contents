@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23507" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Equipment" representedClassName="Equipment" syncable="YES">
+        <attribute name="drop_chance" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="equipped" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="image" attributeType="String"/>
+        <attribute name="level" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="score" attributeType="Integer 16" defaultValueString="100" usesScalarValueType="YES"/>
+        <attribute name="slot_type" attributeType="String"/>
+        <relationship name="equipmentHatch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Hatch" inverseName="hatchEquipment" inverseEntity="Hatch"/>
+    </entity>
+    <entity name="Hatch" representedClassName="Hatch" syncable="YES">
+        <attribute name="image" attributeType="String"/>
+        <attribute name="score" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type_name" attributeType="String"/>
+        <relationship name="hatchEquipment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Equipment" inverseName="equipmentHatch" inverseEntity="Equipment"/>
+    </entity>
+</model>
