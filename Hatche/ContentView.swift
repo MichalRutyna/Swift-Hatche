@@ -11,27 +11,53 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
-
+    
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Equipment.score, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Hatch.score, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Equipment>
-
+    private var hatches: FetchedResults<Hatch>
+    @State private var selectedHatch: String = "Marcin"
+    @State private var new_hatch_name: String = ""
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item \(item.name) ")
-                    } label: {
-                        Text(item.name)
+        VStack{
+            Picker("hatch", selection: $selectedHatch){
+                ForEach(hatches) { hatch in
+                    HStack() { // spacing między obrazkiem a tekstem
+                        Image(hatch.image)
+                            .resizable()
+                            .rotationEffect(Angle(degrees: -90))
+                            .frame(width: 30, height: 30)
+                        Text(hatch.type_name)
+                            .tag(hatch.type_name)
+                            .rotationEffect(Angle(degrees: -90))
+                            .scaleEffect(0.2)
+                        
+                        
                     }
+                    .frame(height: 300)
+                    
                 }
             }
+            .pickerStyle(.wheel)
+            .scaleEffect(3)
+            .frame(width: 120, height: 100)
+            .rotationEffect(Angle(degrees: 90))
             
+            Text("Nazwa: ")
+            TextField("Twuj stary", text: $new_hatch_name)
+                .onSubmit {
+                    if(validate()){
+                        print("Dobra nazwa")
+                    }
+                }
         }
     }
-
+    
+    func validate() -> Bool
+    {
+        return !new_hatch_name.isEmpty
+    }
 }
 
 private let itemFormatter: DateFormatter = {
@@ -44,3 +70,5 @@ private let itemFormatter: DateFormatter = {
 #Preview {
     ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
+
+

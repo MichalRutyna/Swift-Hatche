@@ -15,15 +15,21 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        var newItem = Equipment(context: viewContext)
-        newItem.name = "Drewniany miecz"
-        newItem.image = "drewniany_miecz"
-        newItem.slot_type = "hand"
+        var newItem = Hatch(context: viewContext)
+        newItem.type_name = "Andzrej"
+        newItem.score = 1000
+        newItem.image = "1"
         
-        newItem = Equipment(context: viewContext)
-        newItem.name = "Stalowy miecz"
-        newItem.image = "stalowy_miecz"
-        newItem.slot_type = "hand"
+        var newItem2 = Hatch(context: viewContext)
+        newItem2.type_name = "Marcin"
+        newItem2.score = 200
+        newItem2.image = "16"
+        
+        var newItem3 = Hatch(context: viewContext)
+        newItem3.type_name = "Julka kulka"
+        newItem3.score = 2137
+        newItem3.image = "18"
+
         
         do {
             try viewContext.save()
