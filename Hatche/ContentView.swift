@@ -10,28 +10,53 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Equipment.score, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Equipment>
+    @State private var selectedhead: Equipment?
+    @State private var selectedchestplate: Equipment?
+    @State private var selectedlegs: Equipment?
+    @State private var selectedboots: Equipment?
+    
+    @State private var selectedhands: Equipment?
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item \(item.name) ")
-                    } label: {
-                        Text(item.name)
-                    }
+            HStack(spacing: 50) {
+                VStack(spacing: 50) {
+                    ItemSlot(
+                        selectedEquipment: $selectedhands,
+                        slotType: ItemType.Hands
+                    )
                 }
+                .padding()
+                
+                Image("1")
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                
+                
+                VStack(spacing: 50) {
+                    ItemSlot(
+                        selectedEquipment: $selectedhead,
+                        slotType: ItemType.Head
+                    )
+                    ItemSlot(
+                        selectedEquipment: $selectedchestplate,
+                        slotType: ItemType.Chest
+                    )
+                    ItemSlot(
+                        selectedEquipment: $selectedlegs,
+                        slotType: ItemType.Legs
+                    )
+                    ItemSlot(
+                        selectedEquipment: $selectedboots,
+                        slotType: ItemType.Boots
+                    )
+                }
+                .padding()
+                
             }
-            
+            .navigationTitle("Home")
         }
     }
-
 }
 
 private let itemFormatter: DateFormatter = {

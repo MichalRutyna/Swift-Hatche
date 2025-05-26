@@ -16,14 +16,16 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         
         var newItem = Equipment(context: viewContext)
-        newItem.name = "Drewniany miecz"
-        newItem.image = "drewniany_miecz"
+        newItem.name = "Zelazny miecz"
+        newItem.image = "Iron_Sword"
         newItem.slot_type = "hand"
+        newItem.score = 100
         
         newItem = Equipment(context: viewContext)
-        newItem.name = "Stalowy miecz"
-        newItem.image = "stalowy_miecz"
+        newItem.name = "Diamentowy miecz"
+        newItem.image = "Diamond_Sword"
         newItem.slot_type = "hand"
+        newItem.score = 300
         
         do {
             try viewContext.save()
