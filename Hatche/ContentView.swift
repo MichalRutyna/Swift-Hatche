@@ -19,45 +19,47 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            HStack(spacing: 50) {
-                VStack(spacing: 50) {
-                    ItemSlot(
-                        selectedEquipment: $selectedhands,
-                        slotType: ItemType.Hands
-                    )
+            VStack {
+                EquippedScoreView()
+                HStack(spacing: 50) {
+                    VStack(spacing: 50) {
+                        ItemSlot(
+                            selectedEquipment: $selectedhands,
+                            slotType: ItemType.Hands
+                        )
+                    }
+                    .padding()
+                    
+                    ClickableHatch(imageName: "1")
+                    
+                    
+                    VStack(spacing: 50) {
+                        ItemSlot(
+                            selectedEquipment: $selectedhead,
+                            slotType: ItemType.Head
+                        )
+                        ItemSlot(
+                            selectedEquipment: $selectedchestplate,
+                            slotType: ItemType.Chest
+                        )
+                        ItemSlot(
+                            selectedEquipment: $selectedlegs,
+                            slotType: ItemType.Legs
+                        )
+                        ItemSlot(
+                            selectedEquipment: $selectedboots,
+                            slotType: ItemType.Boots
+                        )
+                    }
+                    .padding()
+                    
                 }
-                .padding()
-                
-                Image("1")
-                    .resizable()
-                    .frame(width: 150, height: 150)
-                
-                
-                VStack(spacing: 50) {
-                    ItemSlot(
-                        selectedEquipment: $selectedhead,
-                        slotType: ItemType.Head
-                    )
-                    ItemSlot(
-                        selectedEquipment: $selectedchestplate,
-                        slotType: ItemType.Chest
-                    )
-                    ItemSlot(
-                        selectedEquipment: $selectedlegs,
-                        slotType: ItemType.Legs
-                    )
-                    ItemSlot(
-                        selectedEquipment: $selectedboots,
-                        slotType: ItemType.Boots
-                    )
-                }
-                .padding()
-                
+                .navigationTitle("Home")
             }
-            .navigationTitle("Home")
         }
     }
 }
+
 
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()

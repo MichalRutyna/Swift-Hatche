@@ -18,13 +18,13 @@ struct PersistenceController {
         var newItem = Equipment(context: viewContext)
         newItem.name = "Zelazny miecz"
         newItem.image = "Iron_Sword"
-        newItem.slot_type = "hand"
+        newItem.slot_type = "Hands"
         newItem.score = 100
         
         newItem = Equipment(context: viewContext)
         newItem.name = "Diamentowy miecz"
         newItem.image = "Diamond_Sword"
-        newItem.slot_type = "hand"
+        newItem.slot_type = "Hands"
         newItem.score = 300
         
         do {
