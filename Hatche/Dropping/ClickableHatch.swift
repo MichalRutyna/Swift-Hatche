@@ -11,16 +11,25 @@ struct ClickableHatch: View {
     @State private var showPopup = false
     @State private var dropped_item: Equipment?
     
+    @State private var clicks: Int = 0
+    @State private var every_x_clicks: Int = 8
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     var imageName: String
 
     var body: some View {
+        VStack {
         Image(imageName)
             .resizable()
             .frame(width: 150, height: 150)
-            .onTapGesture(count: 2) {
-                showFloatingPopup()
+            .onTapGesture(count: 1) {
+                clicks = clicks + 1
+                if (clicks >= every_x_clicks) {
+                    showFloatingPopup()
+                    clicks = 0
+                    every_x_clicks = Int(Int.random(in: 2...15))
+                }
             }
             .overlay {
                 if showPopup {
@@ -33,9 +42,14 @@ struct ClickableHatch: View {
                 }
             }
             .animation(.easeInOut, value: showPopup)
+        ProgressView(value: Float(clicks) / Float(every_x_clicks))
+            Text("\(clicks)/\(every_x_clicks)")
+            
+        }
     }
 
     func showFloatingPopup() {
+        
         dropped_item = getRandomItem(in: viewContext)
         if ((dropped_item == nil))
         {

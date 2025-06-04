@@ -27,6 +27,21 @@ struct PersistenceController {
         newItem.slot_type = "Hands"
         newItem.score = 300
         
+        var newItem4 = Hatch(context: viewContext)
+        newItem4.type_name = "Andzrej"
+        newItem4.score = 1000
+        newItem4.image = "1"
+        
+        var newItem2 = Hatch(context: viewContext)
+        newItem2.type_name = "Marcin"
+        newItem2.score = 200
+        newItem2.image = "16"
+        
+        var newItem3 = Hatch(context: viewContext)
+        newItem3.type_name = "Julka kulka"
+        newItem3.score = 2137
+        newItem3.image = "18"
+        
         do {
             try viewContext.save()
         } catch {

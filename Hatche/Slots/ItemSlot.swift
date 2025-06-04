@@ -17,9 +17,9 @@ enum ItemType: String, CaseIterable {
 }
 
 struct ItemSlot: View {
-    @Binding public var selectedEquipment: Equipment?
+    @Binding public var hatch: Hatch?
     @Environment(\.managedObjectContext) private var viewContext
-    
+    @State private var equipment: Equipment?
     let slotType: ItemType
 
     
@@ -30,26 +30,35 @@ struct ItemSlot: View {
             }, slotType: slotType)
         }
         label: {
-            if let equipment = selectedEquipment {
-                Image(equipment.image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 40)
-            } else {
+            if let equipment = equipment {
+            Image(equipment.image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 40)
+        } else {
                 Image("Empty")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30, height: 40)
             }
+        }.onAppear {
+            // fetch the equipment once when view appears
+            self.equipment = fetchEquippedItemsBySlot(
+                for: hatch!,
+                slotType: slotType.rawValue.capitalized,
+                context: viewContext
+            )
         }
         .buttonStyle(.borderedProminent)
+            
     }
     
     private func equip(_ equipment: Equipment) {
         let fetchRequest: NSFetchRequest<Equipment> = Equipment.fetchRequest()
         fetchRequest.predicate = NSPredicate(
-            format: "equipped == true AND type == %@",
-            slotType.rawValue
+            format: "equipped == true AND slot_type == %@ AND equipmentHatch == %@",
+            slotType.rawValue,
+            hatch!
         )
         do {
             let currentlyEquipped = try viewContext.fetch(fetchRequest)
@@ -59,10 +68,10 @@ struct ItemSlot: View {
                 item.equipped = false
             }
             equipment.equipped = true
+            equipment.equipmentHatch = hatch
             
             try viewContext.save()
             
-            selectedEquipment = equipment
         } catch {
             print("Failed to save equipped status: \(error.localizedDescription)")
         }

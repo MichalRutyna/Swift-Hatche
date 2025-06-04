@@ -3,6 +3,8 @@ import CoreData
 
 struct EquippedScoreView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    
+    @Binding public var hatch: Hatch?
 
     // Fetch only equipped items, sorted by name (optional)
     @FetchRequest(
@@ -14,7 +16,11 @@ struct EquippedScoreView: View {
     // Computed property to sum scores reactively
     private var totalScore: Int {
         equippedItems.reduce(0) { partialResult, equipment in
-            partialResult + Int(equipment.score)
+            if equipment.equipmentHatch == hatch {
+                return partialResult + Int(equipment.score)
+            } else {
+                return partialResult
+            }
         }
     }
 
